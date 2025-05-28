@@ -1,0 +1,420 @@
+/* General styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f4f6fb;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+h3 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+h4 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+h5 {
+  margin-top: 0;
+  font-size: 14px;
+}
+
+h6 {
+  margin-top: 0;
+  font-size: 12px;
+}
+
+code {
+  font-size: 1.2em;
+}
+
+ul {
+  padding-inline-start: 20px;
+}
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly; /* Spread all children evenly */
+  padding: 24px 48px;
+  background: white;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.10);
+  min-height: 64px;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.nav-bar > * {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-bar .logo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #1519ff;
+  flex-shrink: 0;
+}
+
+.nav-bar .nav-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}
+
+.game {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 104px 0 40px 0; /* Add top padding to avoid overlap with navbar */
+}
+
+.game-mode-selector {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.game-board {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(60,60,100,0.15);
+  padding: 40px;
+  margin-right: 48px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status {
+  margin-bottom: 32px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2d3748;
+  letter-spacing: 1px;
+}
+
+.board-row {
+  display: flex;
+}
+
+.square {
+  background: #e2e8f0;
+  border: 2px solid #a0aec0;
+  border-radius: 12px;
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1.2;
+  height: 90px;
+  width: 90px;
+  margin: 8px;
+  text-align: center;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(60,60,100,0.08);
+}
+
+.square.highlight {
+  background: #ffe066;
+  border-color: #ffd600;
+  box-shadow: 0 0 16px #ffe06688;
+}
+
+.square:hover {
+  background: #cbd5e1;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.18);
+}
+
+.square.highlight:hover {
+  background: #ffe066;
+  cursor: auto;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.18);
+}
+
+.game-info {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(60,60,100,0.12);
+  padding: 40px 32px;
+  min-width: 320px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.game-info ol {
+  padding-left: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.game-info li {
+  margin-bottom: 18px;
+}
+
+.game-info button, .game-info p {
+  font-size: 1.25rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: #edf2f7;
+  color: #2d3748;
+  font-weight: 500;
+  transition: background 0.2s;
+  width: 100%;
+  text-align: left;
+}
+
+.game-info button:hover {
+  background: #cbd5e1;
+  cursor: pointer;
+}
+
+
+.game-info .game-info-actions .RestartGameButton button:hover{
+  background: #ffe066;
+  cursor: pointer;
+}
+
+.game-info .game-info-actions .ToggleButton button:hover{
+  background: #1519ff;
+  cursor: pointer;
+}
+
+
+.ToggleButton{
+  margin-top: 16px;
+  font-size: 1.25rem;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: none;
+  background: #3182ce;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s;
+  width: 100%;           /* Make it full width */
+  box-sizing: border-box;
+  align-self: stretch;   /* Stretch to container width */
+}
+
+
+.RestartGameButton {
+  margin-top: 16px;
+  font-size: 1.25rem;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: none;
+  background: #3ee54c;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+}
+
+.game-info .game-info-actions .RestartGameButton:hover{
+  background: #ffe066;
+  cursor: pointer;
+}
+
+.game-info .game-info-actions .ToggleButton:hover{
+  background: #2563eb;
+  cursor: pointer;
+}
+.game-info-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.mode-switcher {
+  font-size: 1.1rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #a0aec0;
+  background: #fff;
+  color: #2563eb;
+  font-weight: 400;
+  margin-left: 12px;
+  outline: none;
+  transition: border 0.2s;
+  display: inline-block;
+  margin: 0 auto;
+}
+.mode-switcher:focus {
+  border: 2px solid #2563eb;
+}
+
+/* Additional styles for nav-action class */
+.nav-action {
+  font-size: 1.1rem;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+  border: 2px solid transparent;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.nav-action:hover, .nav-action:focus {
+  background: #2563eb;
+  color: #fff;
+  border-color: #1519ff;
+}
+
+/* Online Multiplayer Styles */
+.game-controls {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.game-controls select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.game-controls select:hover {
+  border-color: #2563eb;
+}
+
+.game-controls select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.new-game-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.new-game-button:hover {
+  background-color: #1d4ed8;
+}
+
+.warning {
+  color: #dc2626;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.board.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.status-waiting {
+  background-color: #fff8e1;
+  border: 2px solid #ffd54f;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.status-playing {
+  background-color: #e8f5e9;
+  border: 2px solid #81c784;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.status-finished {
+  background-color: #fafafa;
+  border: 2px solid #bdbdbd;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.your-turn {
+  color: #2e7d32;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}

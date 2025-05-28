@@ -1,0 +1,217 @@
+.online-matches {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.online-matches-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.create-room-btn {
+    padding: 0.5rem 1rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.create-room-btn:hover {
+    background-color: #45a049;
+}
+
+.create-room-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.rooms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.room-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.room-item:hover {
+    transform: translateY(-2px);
+}
+
+.room-item.playing {
+    background-color: #f5f5f5;
+}
+
+.room-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.room-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.room-info span:not(.room-name) {
+    font-size: 0.9rem;
+}
+
+.host-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.players-count {
+    color: #666;
+}
+
+.room-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.room-status.waiting {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.room-status.playing {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.join-btn {
+    padding: 0.5rem 1rem;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.join-btn:hover {
+    background-color: #1976d2;
+}
+
+.your-room-badge {
+    padding: 0.25rem 0.5rem;
+    background-color: #f0f0f0;
+    color: #666;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.create-room-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.dialog-content h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.dialog-content input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.dialog-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.dialog-buttons button:first-child {
+    background-color: #4caf50;
+    color: white;
+}
+
+.dialog-buttons button:last-child {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.loading, .no-rooms {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.online-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-connected {
+    color: #2e7d32;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.status-disconnected {
+    color: #c62828;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
