@@ -1,5 +1,5 @@
 .profile-container {
-  padding: 104px 24px 40px 24px;
+  padding: 124px 24px 40px 24px; /* Increased top padding to avoid navbar overlap */
   max-width: 800px;
   margin: 0 auto;
 }
@@ -183,4 +183,174 @@
   background: #f0fff4;
   border-radius: 8px;
   margin-bottom: 16px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 140px 16px 20px 16px; /* Increased top padding for mobile */
+  }
+  
+  .profile-header {
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .user-info {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .profile-icon.large {
+    width: 56px;
+    height: 56px;
+    font-size: 1.8rem;
+    align-self: center;
+  }
+  
+  .user-info h2 {
+    font-size: 1.3rem;
+  }
+  
+  .user-info p {
+    font-size: 0.9rem;
+  }
+  
+  .game-history-section {
+    padding: 24px;
+    border-radius: 16px;
+  }
+  
+  .game-history-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  
+  .game-record {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  .game-type,
+  .game-result,
+  .game-winner,
+  .game-date {
+    font-size: 0.9rem;
+  }
+  
+  .game-date {
+    text-align: center;
+  }
+  
+  .account-settings-section {
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .account-settings-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  
+  .account-settings-section form {
+    max-width: 100%;
+  }
+  
+  .account-settings-section input {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .update-profile-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 120px 12px 16px 12px; /* Increased top padding for small mobile */
+  }
+  
+  .profile-header {
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .profile-header h1 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+  
+  .user-info {
+    gap: 10px;
+  }
+  
+  .profile-icon.large {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+  
+  .user-info h2 {
+    font-size: 1.1rem;
+  }
+  
+  .user-info p {
+    font-size: 0.8rem;
+  }
+  
+  .game-history-section {
+    padding: 20px;
+    border-radius: 12px;
+  }
+  
+  .game-history-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  
+  .game-record {
+    padding: 10px;
+    gap: 6px;
+  }
+  
+  .game-type,
+  .game-result,
+  .game-winner,
+  .game-date {
+    font-size: 0.8rem;
+  }
+  
+  .account-settings-section {
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .account-settings-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  
+  .account-settings-section input {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .update-profile-btn {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
 }

@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 104px 0 40px 0;
+  padding: 124px 0 40px 0; /* Increased top padding to avoid navbar overlap */
   background: #f4f6fb;
 }
 
@@ -117,4 +117,84 @@
 .form-group input:valid:focus {
   border-color: #38a169;
   box-shadow: 0 0 0 2px rgba(56, 161, 105, 0.2);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 110px 16px 20px 16px; /* Increased top padding for mobile */
+    min-height: calc(100vh - 130px);
+  }
+  
+  .login-form {
+    padding: 24px;
+    border-radius: 16px;
+    max-width: 350px;
+  }
+  
+  .login-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 14px;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+    .login-form button {
+    padding: 10px;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+    .toggle-auth {
+    padding: 6px !important;
+    font-size: 0.8rem !important;
+    margin-top: 8px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .password-hint {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 100px 12px 16px 12px; /* Increased top padding for small mobile */
+  }
+  
+  .login-form {
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 320px;
+  }
+  
+  .login-form h2 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group input {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .login-form button {
+    padding: 8px;
+    font-size: 0.85rem;
+    margin-top: 10px;
+  }
 }

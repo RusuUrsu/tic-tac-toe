@@ -23,3 +23,38 @@
   font-weight: 600;
   font-size: 1.1rem;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .user-profile {
+    gap: 8px;
+    margin-right: 8px;
+  }
+  
+  .username {
+    font-size: 0.9rem;
+  }
+  
+  .profile-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-profile {
+    gap: 6px;
+    margin-right: 6px;
+  }
+  
+  .username {
+    font-size: 0.8rem;
+  }
+  
+  .profile-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+}

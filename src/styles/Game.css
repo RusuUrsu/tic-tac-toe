@@ -9,15 +9,37 @@
 .game-mode {
   width: 100%;
   max-width: 300px;
+  margin-top: 80px; /* Greatly increased top margin for visible positioning */
+  margin-bottom: 30px;
+  position: relative; /* To ensure it's properly positioned */
+  z-index: 50; /* Higher z-index to ensure it's above other elements */
 }
 
 .game-mode select {
   width: 100%;
   padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #2563eb; /* Thicker border for better visibility */
+  font-size: 1.1rem; /* Slightly larger font */
   background-color: white;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2); /* Enhanced shadow */
+  cursor: pointer;
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px; /* Space for the custom arrow */
+}
+
+.game-mode select:hover {
+  border-color: #1d4ed8;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+}
+
+.game-mode select:focus {
+  outline: none;
+  border-color: #1d4ed8;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
 }
 
 .game-mode select:disabled {
@@ -258,4 +280,169 @@
 
 .waiting-status {
   animation: pulse 1.5s infinite;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .game {
+    padding: 120px 16px 20px 16px;
+    gap: 20px;
+  }
+  
+  .game-status {
+    min-width: auto;
+    width: 100%;
+    max-width: 350px;
+    padding: 0.75rem 1rem;
+  }
+    .game-mode {
+    max-width: 280px;
+    margin-top: 20px; /* Add margin at top for mobile */
+    z-index: 1; /* Ensure it's above other elements */
+  }
+  
+  .game-mode select {
+    padding: 10px;
+    font-size: 0.9rem;
+    height: 46px; /* Make touch target bigger */
+  }
+  
+  .players-info {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+  
+  .current-player,
+  .opponent-player {
+    margin: 0;
+    padding: 8px;
+  }
+  
+  .player-label,
+  .player-name,
+  .opponent-name {
+    font-size: 0.9rem;
+  }
+  
+  .turn-status {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .waiting-status {
+    font-size: 0.9rem;
+  }
+  
+  .game-board {
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .board-row {
+    justify-content: center;
+  }
+  
+  .move-list {
+    max-height: 200px;
+    padding: 0.75rem;
+  }
+  
+  .game-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  
+  .play-again-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .game-result {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+  }
+  
+  .winner,
+  .draw {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game {
+    padding: 100px 12px 16px 12px;
+    gap: 16px;
+  }
+  
+  .game-status {
+    max-width: 320px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .game-mode {
+    max-width: 250px;
+  }
+  
+  .game-mode select {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .game-board {
+    padding: 16px;
+    max-width: 320px;
+  }
+  
+  .players-info {
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .current-player,
+  .opponent-player {
+    padding: 6px;
+  }
+  
+  .player-label,
+  .player-name,
+  .opponent-name {
+    font-size: 0.8rem;
+  }
+  
+  .turn-status {
+    font-size: 0.8rem;
+  }
+  
+  .waiting-status {
+    font-size: 0.8rem;
+  }
+  
+  .move-list {
+    max-height: 150px;
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  .game-controls {
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+  }
+  
+  .play-again-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .winner,
+  .draw {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
 }

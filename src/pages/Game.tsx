@@ -333,12 +333,15 @@ export default function Game() {
       );
     }
     return null;
-  };
-
-  return (
+  };  return (
     <div className="game">
-      <div className="game-mode">
-        <select value={gameMode} onChange={handleModeChange} disabled={roomId !== null}>
+      <div className="game-mode" id="game-mode-selector">
+        <select 
+          value={gameMode} 
+          onChange={handleModeChange} 
+          disabled={roomId !== null}
+          aria-label="Select game mode"
+        >
           <option value="two-player">Two Player (Local)</option>
           <option value="single-player">Single Player (vs AI)</option>
           <option value="online">Online Multiplayer</option>
@@ -347,34 +350,36 @@ export default function Game() {
 
       {renderGameStatus()}
       
-      <div className="game-board">
-        <Board
-          xIsNext={gameMode === 'online' ? gameState.isMyTurn : xIsNext}
-          squares={gameMode === 'online' ? gameState.board : currentSquares}
-          onPlay={handlePlay}
-          winningLine={calculateWinner(gameMode === 'online' ? gameState.board : currentSquares)}
-          disabled={
-            gameMode === 'online' && 
-            (!gameState.isMyTurn || gameState.gameStatus !== 'playing')
-          }
-        />
-      </div>
+      <div className="game-content">
+        <div className="game-board">
+          <Board
+            xIsNext={gameMode === 'online' ? gameState.isMyTurn : xIsNext}
+            squares={gameMode === 'online' ? gameState.board : currentSquares}
+            onPlay={handlePlay}
+            winningLine={calculateWinner(gameMode === 'online' ? gameState.board : currentSquares)}
+            disabled={
+              gameMode === 'online' && 
+              (!gameState.isMyTurn || gameState.gameStatus !== 'playing')
+            }
+          />
+        </div>
 
-      <div className="game-info">
-        {gameMode !== 'online' && (
-          <>
-            <div className="move-list">
-              <ol>{isAscending ? moves : [...moves].reverse()}</ol>
-            </div>
-            <div className="game-controls">
-              <ToggleButton onClick={sortMoves} />
-              <RestartGameButton onClick={() => {
-                setHistory([Array(9).fill(null)]);
-                setCurrentMove(0);
-              }} />
-            </div>
-          </>
-        )}
+        <div className="game-info">
+          {gameMode !== 'online' && (
+            <>
+              <div className="move-list">
+                <ol>{isAscending ? moves : [...moves].reverse()}</ol>
+              </div>
+              <div className="game-controls">
+                <ToggleButton onClick={sortMoves} />
+                <RestartGameButton onClick={() => {
+                  setHistory([Array(9).fill(null)]);
+                  setCurrentMove(0);
+                }} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
