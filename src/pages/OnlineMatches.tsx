@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
-import ConnectionDebugger from '../components/ConnectionDebugger';
 import '../styles/OnlineMatches.css';
 
 interface Room {
@@ -19,11 +18,10 @@ export default function OnlineMatches() {
     const { isAuthenticated, user } = useAuth();
     const { isConnected, socket } = useSocket();
     const [rooms, setRooms] = useState<Room[]>([]);
-    const [isCreatingRoom, setIsCreatingRoom] = useState(false);
+    const [isCreatingRoom, setIsCreatingRoom] = useState(false);    
     const [roomName, setRoomName] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [debugInfo, setDebugInfo] = useState<string | null>(null);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -76,38 +74,7 @@ export default function OnlineMatches() {
             socket?.off('error');
             socket?.off('game_start');
             clearInterval(intervalId);
-        };
-    }, [isAuthenticated, navigate, socket, isConnected]);
-
-    // Add a debug effect
-    useEffect(() => {
-        if (socket) {
-            // Check the socket connection state
-            setDebugInfo(`Socket ID: ${socket.id || 'not assigned'}, Connected: ${isConnected}, 
-                          Socket instance exists: ${!!socket}`);
-            
-            // Add additional debug listeners
-            socket.on('connect_error', (err) => {
-                console.error('Connection error:', err);
-                setDebugInfo(`Connection error: ${err.message}`);
-            });
-            
-            socket.io.on('reconnect_attempt', (attempt) => {
-                console.log(`Reconnection attempt ${attempt}`);
-                setDebugInfo(`Reconnection attempt ${attempt}`);
-            });
-            
-            // Emit a specific debug event to test connection
-            socket.emit('get_rooms');
-        }
-        
-        return () => {
-            socket?.off('connect_error');
-            if (socket?.io) {
-                socket.io.off('reconnect_attempt');
-            }
-        };
-    }, [socket, isConnected]);
+        };    }, [isAuthenticated, navigate, socket, isConnected]);
 
     const createRoom = () => {
         if (!roomName.trim()) {
@@ -125,7 +92,6 @@ export default function OnlineMatches() {
         socket?.emit('join_room', roomId);
     };    return (
         <div className="online-matches">
-            <ConnectionDebugger />
             <h2>Online Matches</h2>
             
             <div className="online-matches-header">
@@ -135,20 +101,44 @@ export default function OnlineMatches() {
                     ) : (
                         <span className="status-disconnected">🔴 Disconnected</span>
                     )}
-                </div>
-                <button 
+                </div>                <button 
                     className="create-room-btn"
                     onClick={() => setIsCreatingRoom(true)}
                     disabled={!isConnected}
+                    style={{
+                        padding: '0.75rem 1.5rem',
+                        backgroundColor: isConnected ? '#4caf50' : '#cccccc',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: isConnected ? 'pointer' : 'not-allowed',
+                        fontWeight: 600,
+                        boxShadow: isConnected ? '0 4px 6px rgba(76, 175, 80, 0.3)' : 'none',
+                        transition: 'all 0.2s ease',
+                        outline: 'none'
+                    }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = '#45a049';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 12px rgba(76, 175, 80, 0.4)';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = '#4caf50';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 6px rgba(76, 175, 80, 0.3)';
+                    }}
+                    onMouseDown={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(76, 175, 80, 0.3)';
+                    }}
+                    onMouseUp={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 12px rgba(76, 175, 80, 0.4)';
+                    }}
                 >
                     Create Room
                 </button>
-            </div>
-
-            {error && <div className="error-message">{error}</div>}
-            {debugInfo && <div className="debug-info" style={{ fontSize: '12px', color: '#666', margin: '10px 0', padding: '8px', background: '#f5f5f5' }}>
-                <strong>Debug Info:</strong> {debugInfo}
-            </div>}
+            </div>            {error && <div className="error-message">{error}</div>}
             
             <div className="rooms-list">
                 {isLoading ? (
