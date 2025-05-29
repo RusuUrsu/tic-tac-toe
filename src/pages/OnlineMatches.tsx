@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
+import ConnectionDebugger from '../components/ConnectionDebugger';
 import '../styles/OnlineMatches.css';
 
 interface Room {
@@ -22,6 +23,7 @@ export default function OnlineMatches() {
     const [roomName, setRoomName] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [debugInfo, setDebugInfo] = useState<string | null>(null);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -31,6 +33,7 @@ export default function OnlineMatches() {
 
         // Listen for room updates
         socket?.on('rooms_update', (updatedRooms: Room[]) => {
+            console.log('Received rooms update:', updatedRooms);
             setRooms(updatedRooms || []);
             setIsLoading(false);
         });
@@ -38,29 +41,91 @@ export default function OnlineMatches() {
         socket?.on('error', (error: { message: string }) => {
             setError(error.message);
             setTimeout(() => setError(null), 5000);
-        });        // Request initial rooms list
-        socket?.emit('get_rooms');        return () => {
+        });
+        
+        // Listen for game start event to navigate to game
+        socket?.on('game_start', (data: {
+            room: string;
+            symbol: 'X' | 'O';
+            opponent: string | null;
+            isMyTurn: boolean;
+            gameStatus: string;
+        }) => {
+            console.log('Game starting from OnlineMatches:', data);
+            navigate(`/game?room=${data.room}`);
+        });
+
+        // Request initial rooms list
+        socket?.emit('get_rooms');
+          // Request rooms immediately when connected
+        if (socket && isConnected) {
+            console.log('Initially requesting rooms list');
+            socket.emit('get_rooms');
+        }
+        
+        // Set up periodic room refresh
+        const intervalId = setInterval(() => {
+            if (socket && isConnected) {
+                console.log('Requesting updated rooms list');
+                socket.emit('get_rooms');
+            }
+        }, 3000); // Refresh every 3 seconds for more responsiveness
+
+        return () => {
             socket?.off('rooms_update');
             socket?.off('error');
+            socket?.off('game_start');
+            clearInterval(intervalId);
         };
-    }, [isAuthenticated, navigate, socket]);
+    }, [isAuthenticated, navigate, socket, isConnected]);
+
+    // Add a debug effect
+    useEffect(() => {
+        if (socket) {
+            // Check the socket connection state
+            setDebugInfo(`Socket ID: ${socket.id || 'not assigned'}, Connected: ${isConnected}, 
+                          Socket instance exists: ${!!socket}`);
+            
+            // Add additional debug listeners
+            socket.on('connect_error', (err) => {
+                console.error('Connection error:', err);
+                setDebugInfo(`Connection error: ${err.message}`);
+            });
+            
+            socket.io.on('reconnect_attempt', (attempt) => {
+                console.log(`Reconnection attempt ${attempt}`);
+                setDebugInfo(`Reconnection attempt ${attempt}`);
+            });
+            
+            // Emit a specific debug event to test connection
+            socket.emit('get_rooms');
+        }
+        
+        return () => {
+            socket?.off('connect_error');
+            if (socket?.io) {
+                socket.io.off('reconnect_attempt');
+            }
+        };
+    }, [socket, isConnected]);
 
     const createRoom = () => {
         if (!roomName.trim()) {
             setError('Please enter a room name');
             return;
         }
+        console.log('Creating room with name:', roomName);
         socket?.emit('create_room', { name: roomName });
         setIsCreatingRoom(false);
         setRoomName('');
     };
 
     const joinRoom = (roomId: string) => {
+        console.log('Joining room with ID:', roomId);
         socket?.emit('join_room', roomId);
-    };
-
-    return (
+    };    return (
         <div className="online-matches">
+            <ConnectionDebugger />
             <h2>Online Matches</h2>
             
             <div className="online-matches-header">
@@ -81,7 +146,10 @@ export default function OnlineMatches() {
             </div>
 
             {error && <div className="error-message">{error}</div>}
-
+            {debugInfo && <div className="debug-info" style={{ fontSize: '12px', color: '#666', margin: '10px 0', padding: '8px', background: '#f5f5f5' }}>
+                <strong>Debug Info:</strong> {debugInfo}
+            </div>}
+            
             <div className="rooms-list">
                 {isLoading ? (
                     <div className="loading">Loading rooms...</div>

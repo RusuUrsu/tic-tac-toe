@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE } from '../config';
 import '../styles/Profile.css';
 
 interface GameRecord {
-  gameType: 'computer' | 'multiplayer';
+  gameType: 'computer' | 'multiplayer' | 'online';
   result: 'win' | 'loss' | 'draw';
   winner: 'X' | 'O' | 'draw';
   date: string;
+  opponent?: string;
+  gameTypeDisplay?: string;
+  resultDisplay?: string;
+  opponentDisplay?: string;
 }
 
 export default function Profile() {
@@ -25,20 +30,40 @@ export default function Profile() {
   useEffect(() => {
     const fetchGameHistory = async () => {
       try {
-        const token = localStorage.getItem('token');        const response = await fetch('http://localhost:3001/api/games/history', {
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+          setError('You must be logged in to view game history');
+          setLoading(false);
+          return;
+        }
+        
+        console.log('Fetching history from:', `${API_BASE}/api/games/history`);
+        console.log('Using token:', token?.substring(0, 10) + '...');
+        
+        const response = await fetch(`${API_BASE}/api/games/history`, {
+          method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         });
 
+        console.log('Response status:', response.status);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log('Received game history:', data);
           setGameHistory(data);
         } else {
-          setError('Failed to fetch game history');
+          const errorData = await response.json().catch(() => ({}));
+          console.error('Error response:', errorData);
+          setError(`Failed to fetch game history: ${errorData.message || response.statusText}`);
         }
       } catch (error) {
-        setError('Error fetching game history');
+        console.error('Error fetching game history:', error);
+        setError(`Error fetching game history: ${(error as Error).message}`);
       } finally {
         setLoading(false);
       }
@@ -73,9 +98,9 @@ export default function Profile() {
         <h1>Profile</h1>
         <div className="user-info">
           <div className="profile-icon large">
-            {user?.username.charAt(0).toUpperCase()}
+            {user?.username ? user.username.charAt(0).toUpperCase() : '?'}
           </div>
-          <h2>{user?.username}</h2>
+          <h2>{user?.username || 'Guest'}</h2>
         </div>
       </div>
 
@@ -130,10 +155,13 @@ export default function Profile() {
             {gameHistory.map((game, index) => (
               <div key={index} className="game-record">
                 <div className="game-type">
-                  {game.gameType === 'multiplayer' ? '👥 Online Match' : '🤖 vs Computer'}
+                  {game.gameTypeDisplay || 
+                   (game.gameType === 'online' ? '👥 Online Match' : 
+                    game.gameType === 'computer' ? '🤖 vs Computer' : 
+                    '👫 Local Multiplayer')}
                 </div>
                 <div className={`game-result ${game.result}`}>
-                  {game.result.toUpperCase()}
+                  {game.resultDisplay || game.result.toUpperCase()}
                 </div>
                 <div className="game-winner">
                   Winner: {game.winner === 'draw' ? 'Draw' : `Player ${game.winner}`}

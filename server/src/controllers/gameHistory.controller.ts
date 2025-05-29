@@ -7,6 +7,15 @@ export const gameHistoryController = {
       const { gameType, result, winner, opponent, gameMode } = req.body;
       const userId = (req as any).user._id; // Added by auth middleware
 
+      console.log('Saving game history:', { 
+        userId, 
+        gameType, 
+        result, 
+        winner, 
+        opponent, 
+        gameMode 
+      });
+
       const gameHistory = new GameHistory({
         userId,
         gameType,
@@ -43,6 +52,34 @@ export const gameHistoryController = {
     } catch (error) {
       console.error('Get history error:', error);
       res.status(500).json({ error: 'Failed to get game history' });
+    }
+  },
+
+  async getGameHistory(req: Request, res: Response) {
+    try {
+      const userId = req.params.userId || (req as any).user?._id;
+      
+      if (!userId) {
+        return res.status(400).json({ message: 'User ID is required' });
+      }
+
+      const history = await GameHistory.find({ userId })
+        .sort({ date: -1 })
+        .limit(10);
+      
+      const formattedHistory = history.map(game => ({
+        id: game._id,
+        date: game.date,
+        gameType: game.gameType,
+        result: game.result,
+        winner: game.winner,
+        opponent: game.opponent || (game.gameType === 'computer' ? 'Computer' : 'Player 2')
+      }));
+
+      return res.status(200).json(formattedHistory);
+    } catch (error) {
+      console.error('Error fetching game history:', error);
+      return res.status(500).json({ message: 'Failed to fetch game history', error });
     }
   }
 };

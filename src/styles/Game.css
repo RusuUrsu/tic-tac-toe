@@ -207,29 +207,41 @@
 }
 
 .square {
-  width: 60px;
-  height: 60px;
-  border: 2px solid #ddd;
-  margin: -1px;
-  font-size: 2rem;
+  background: #e2e8f0;
+  border: 2px solid #a0aec0;
+  border-radius: 12px;
+  font-size: 3rem;
   font-weight: bold;
-  background: white;
-  cursor: pointer;
-  transition: all 0.2s;
+  line-height: 1.2;
+  height: 90px;
+  width: 90px;
+  margin: 8px;
+  text-align: center;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(60,60,100,0.08);
 }
 
 .square:hover:not(:disabled) {
-  background-color: #f5f5f5;
+  background: #cbd5e1;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.18);
 }
 
 .square.highlight {
-  background-color: #e8f5e9;
-  border-color: #4caf50;
+  background: #ffe066;
+  border-color: #ffd600;
+  box-shadow: 0 0 16px #ffe06688;
 }
 
 .square:disabled {
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+.square.highlight:hover {
+  background: #ffe066;
+  cursor: auto;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.18);
 }
 
 @keyframes pulse {

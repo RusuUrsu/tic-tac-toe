@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE } from '../config';
 import '../styles/Login.css';
 
 export default function Login() {
@@ -33,11 +34,10 @@ export default function Login() {
 
     if (!validateInput()) {
       return;
-    }
-
-    try {      const endpoint = isLogin ? 'login' : 'register';
-      console.log('Making request to:', `http://localhost:3001/api/auth/${endpoint}`);
-      const response = await fetch(`http://localhost:3001/api/auth/${endpoint}`, {
+    }    try {      const endpoint = isLogin ? 'login' : 'register';
+      const url = `${API_BASE}/api/auth/${endpoint}`;
+      console.log('Making request to:', url);
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

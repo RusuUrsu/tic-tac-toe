@@ -15,9 +15,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173", // Vite's default port
-    methods: ["GET", "POST"]
-  }
+    origin: ["http://localhost:5173", "http://localhost:5174", "http://172.25.129.201:5174"], // Support both possible Vite ports and network access
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ['websocket', 'polling'], // Explicitly enable both transport methods
+  pingTimeout: 60000, // How long to wait for a pong packet
+  pingInterval: 25000, // How often to send ping packets
+  upgradeTimeout: 30000, // How long to wait for an upgrade
+  allowUpgrades: true
 });
 
 // Initialize socket manager
@@ -52,9 +58,8 @@ console.log('Attempting to connect to MongoDB at:', mongoUri);
 mongoose.connect(mongoUri)
   .then(() => {
     console.log('Successfully connected to MongoDB');
-    
-    // Start server only after successful DB connection
-    const PORT = process.env.PORT || 3001; // Changed to 3001 to avoid conflicts
+      // Start server only after successful DB connection
+    const PORT = process.env.PORT || 3001; // Changed to 3001, which is the actual running port
     httpServer.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
       console.log('Test the server by visiting:');

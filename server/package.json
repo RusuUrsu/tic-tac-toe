@@ -20,6 +20,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.1",
+    "prisma": "^6.8.2",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
   },
